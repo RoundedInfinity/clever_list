@@ -9,7 +9,6 @@ typedef CleverListTransitionBuilder = Widget Function(
   Widget child,
 );
 
-/// {@template cleverListWidget}
 /// An abstract implementation of an animated List widget that animates
 /// changes to the list automatically.
 ///
@@ -18,9 +17,10 @@ typedef CleverListTransitionBuilder = Widget Function(
 /// generates the widget for each item. You can also specify optional transition
 /// builders for insertions and removals and custom animation durations.
 /// {@endtemplate}
-/// {@endtemplate}
 abstract class CleverListWidget<T> extends CleverListBase<T> {
-  /// {@macro cleverListWidget}
+  /// Creates an [CleverListWidget].
+  ///
+  /// {@macro cleverList.usage}
   const CleverListWidget({
     required super.items,
     required this.builder,

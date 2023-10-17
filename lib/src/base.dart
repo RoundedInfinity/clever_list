@@ -9,8 +9,7 @@ import 'package:flutter/widgets.dart';
 /// ```
 typedef EqualityChecker<T> = bool Function(T a, T b);
 
-/// An abstract representation of a widget with a list of [items] that can
-/// react to insert, remove, change and move actions in [items].
+/// A low-level implementation for reacting to diff results in a Widget
 ///
 /// {@template cleverList.equality}
 /// By default this list uses the [==] operator to check for equality of its
@@ -20,6 +19,9 @@ typedef EqualityChecker<T> = bool Function(T a, T b);
 /// other values that can change use [itemIdEquality] to check for the
 /// identifier and [equalityChecker] for changes in its other values.
 /// {@endtemplate}
+///
+/// The corresponding [CleverListBaseState] extends insert, remove, move and
+/// change callbacks to react to changes in [items].
 abstract class CleverListBase<T> extends StatefulWidget {
   /// Creates a [CleverListBase].
   const CleverListBase({

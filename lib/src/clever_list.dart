@@ -47,9 +47,9 @@ class CleverList<T> extends CleverListWidget<T> {
   /// display. The [builder] parameter is a required callback function that
   /// defines how to build a widget for each item.
   ///
-  /// {@macro cleverList.equality}
+  ///  {@macro cleverList.usage}
   ///
-  /// {@macro cleverList.sliver.example}
+  /// {@macro cleverList.equality}
   const CleverList({
     required super.items,
     required super.builder,
@@ -210,12 +210,18 @@ class _CleverListState<T> extends CleverListBaseState<T, CleverList<T>> {
   @override
   void remove(int position, int count) {
     for (var i = 0; i < count; i++) {
+      final value = oldItems.elementAtOrNull(position + i);
+
+      // If the item is already removed (happens when trying to delete an item
+      //  more than once).
+      if (value == null) return;
+
       _animatedList.removeItem(
         position,
         (context, animation) {
           return _removeTransition(
             animation: animation,
-            child: widget.builder(context, oldItems[position + i]),
+            child: widget.builder(context, value),
           );
         },
         duration: widget.removeDuration,
@@ -230,5 +236,7 @@ class _CleverListState<T> extends CleverListBaseState<T, CleverList<T>> {
   }
 
   @override
-  void move(int from, int to) {}
+  void move(int from, int to) {
+    // TODO(roundedinfinity): Implement moves.
+  }
 }

@@ -4,51 +4,50 @@
 [![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
 [![License: MIT][license_badge]][license_link]
 
-A Very Good Project created by Very Good CLI.
+A ListView widget that implicitly animates changes. CleverLists are built from a list of data objects.
 
-## Installation 💻
+## Usage 
 
-**❗ In order to start using Clever List you must have the [Flutter SDK][flutter_install_link] installed on your machine.**
+Using CleverList is straightforward. You need to create a list of items, define a builder function for rendering each item, and specify optional animations for insertion and removal.
 
-Install via `flutter pub add`:
+First you need data for your list. The list uses the `==` operator to compare them. You can also set your own comparison by using `equalityChecker`.
 
-```sh
-dart pub add clever_list
+```dart
+// Your data that you want to use to build the list.
+var persons = <String>[
+  'Rick',
+  'Beth',
+  'Jerry'
+];
 ```
 
----
+Then you can use this data for your widget.
 
-## Continuous Integration 🤖
-
-Clever List comes with a built-in [GitHub Actions workflow][github_actions_link] powered by [Very Good Workflows][very_good_workflows_link] but you can also add your preferred CI/CD solution.
-
-Out of the box, on each pull request and push, the CI `formats`, `lints`, and `tests` the code. This ensures the code remains consistent and behaves correctly as you add functionality or make changes. The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis options used by our team. Code coverage is enforced using the [Very Good Workflows][very_good_coverage_link].
-
----
-
-## Running Tests 🧪
-
-For first time users, install the [very_good_cli][very_good_cli_link]:
-
-```sh
-dart pub global activate very_good_cli
+```dart
+CleverList<String>(
+  items: persons,
+  builder: (context, value) {
+    return ListTile(
+      title: Text(value),
+    );
+  },
+)
 ```
 
-To run all unit tests:
+Now when `persons` changes and the state is updated, the list will automatically animate the changes.
 
-```sh
-very_good test --coverage
-```
+### Customization 
 
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
+Use `insertDuration` and `removeDuration` to customize the durations for the insert and remove durations.
 
-```sh
-# Generate Coverage Report
-genhtml coverage/lcov.info -o coverage/
+You can use the insertTransitionBuilder and removeTransitionBuilder parameters to create your custom insertion and removal animations.
 
-# Open Coverage Report
-open coverage/index.html
-```
+For more advanced use cases, you can extend  `CleverListBase` or `CleverListWidget` for your own implementation.
+
+
+## Acknowledgements
+
+This package is greatly inspired by [diffutil_sliverlist]([https://](https://pub.dev/packages/diffutil_sliverlist)) ❤️.
 
 [flutter_install_link]: https://docs.flutter.dev/get-started/install
 [github_actions_link]: https://docs.github.com/en/actions/learn-github-actions

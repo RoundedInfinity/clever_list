@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
-import 'package:example/movable.dart';
 import 'package:flutter/material.dart';
 
 import 'package:clever_list/clever_list.dart';
@@ -15,12 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'CleverList Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MovableListPage(),
+      home: const HomePage(),
     );
   }
 }
@@ -33,90 +31,51 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // data object used to build the list.
   var persons = <Person>[
-    Person(name: 'Bert', age: 12),
+    Person(name: 'Bert', age: 64),
     Person(name: 'Martin', age: 43),
-    Person(name: 'Albedrt', age: 25),
+    Person(name: 'John', age: 29),
     Person(name: 'Albert', age: 25),
-    Person(name: 'AAA', age: 15),
-    Person(name: 'eeaeaa', age: 14),
+    Person(name: 'Mike', age: 15),
+    Person(name: 'Mohammed', age: 54),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hello'),
+        title: const Text('CleverList'),
         actions: [
           IconButton(
             onPressed: () {
+              // Add an item to the list.
               setState(() {
                 final list = List<Person>.from(persons);
-
                 list.add(Person(name: 'peter', age: Random().nextInt(200)));
                 persons = list;
               });
             },
             icon: const Icon(Icons.add),
           ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                setState(() {
-                  persons = <Person>[
-                    Person(name: 'Albedrt', age: 25),
-                    Person(name: 'Martin the cool moving thing', age: 43),
-                    Person(name: 'Bert', age: 12),
-                    Person(name: 'Albert', age: 25),
-                    Person(name: 'AAA', age: 15),
-                    Person(name: 'eeaeaa', age: 14),
-                  ];
-                });
-              });
-            },
-            icon: const Icon(Icons.move_down_rounded),
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                persons = <Person>[
-                  Person(name: 'Albedrt', age: 25),
-                  Person(name: 'Bert', age: 12),
-                  Person(name: 'Albert', age: 25),
-                  Person(name: 'AAA', age: 15),
-                  Person(name: 'Martin the cool moving thing', age: 43),
-                  Person(name: 'eeaeaa', age: 14),
-                ];
-              });
-            },
-            icon: const Icon(Icons.move_down_rounded),
-          ),
         ],
       ),
-      body: SizedBox(
-        height: 800,
-        child: MovableCleverList<Person>(
-          scrollDirection: Axis.vertical,
-          items: persons,
-          equalityChecker: (a, b) => a.name == b.name,
-          itemIdEquality: (a, b) => a.age == b.age,
-          builder: (context, value) {
-            return ListTile(
-              title: Text(
-                value.name,
-              ),
-              onTap: () {
-                setState(() {
-                  final list = List<Person>.from(persons);
+      body: CleverList<Person>(
+        items: persons,
+        builder: (context, value) {
+          return ListTile(
+            title: Text(
+              value.name,
+            ),
+            onTap: () {
+              setState(() {
+                final list = List<Person>.from(persons);
 
-                  list.remove(value);
-                  persons = list;
-                });
-              },
-            );
-          },
-          insertDuration: const Duration(milliseconds: 500),
-          removeDuration: const Duration(milliseconds: 300),
-        ),
+                list.remove(value);
+                persons = list;
+              });
+            },
+          );
+        },
       ),
     );
   }
