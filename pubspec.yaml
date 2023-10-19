@@ -1,6 +1,7 @@
 name: clever_list
 description: A ListView widget that implicitly animates changes. CleverLists are built from a list of data objects.
 version: 1.0.0
+repository: https://github.com/RoundedInfinity/clever_list
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
